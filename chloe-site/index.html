@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chloe Chan — Marketing candidate · Hong Kong</title>
+  <meta name="description" content="Chloe Chan — MSc Marketing candidate at HKU. Digital marketing, consumer insights, brand strategy. Based in Hong Kong.">
+  <style>
+    :root {
+      --bg: #FAF6EE;
+      --surface: #F2E9DA;
+      --surface-2: #EFE6D6;
+      --ink: #2F1D12;
+      --ink-soft: #5C3A28;
+      --muted: #8B5A3C;
+      --accent: #B86F4B;
+      --accent-soft: #C9A084;
+      --rule: #E5DCC9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4 { font-family: Georgia, "Source Serif Pro", "Times New Roman", serif; font-weight: 400; letter-spacing: -0.5px; margin: 0; }
+    h1 { font-size: 60px; line-height: 1.02; }
+    h2 { font-size: 34px; line-height: 1.15; }
+    h3 { font-size: 20px; line-height: 1.25; }
+    a { color: inherit; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+    /* topbar */
+    .topbar { padding: 24px 0; border-bottom: 0.5px solid var(--rule); }
+    .topbar-inner { display: flex; justify-content: space-between; align-items: baseline; }
+    .mark { font-family: Georgia, serif; font-size: 19px; color: var(--ink); text-decoration: none; letter-spacing: -0.2px; }
+    .mark span { color: var(--accent); }
+    .nav { display: flex; gap: 28px; font-size: 13.5px; }
+    .nav a { color: var(--ink-soft); text-decoration: none; }
+    .nav a:hover { color: var(--accent); }
+
+    /* hero */
+    .hero { padding: 88px 0 56px; }
+    .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: center; }
+    .eyebrow { font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--muted); margin: 0 0 18px; }
+    .tagline { font-style: italic; color: var(--ink-soft); font-size: 19px; margin: 18px 0 0; max-width: 480px; line-height: 1.55; }
+    .pills { margin-top: 28px; display: flex; gap: 8px; flex-wrap: wrap; font-size: 13.5px; }
+    .pill { padding: 7px 16px; border: 0.5px solid var(--accent-soft); border-radius: 100px; text-decoration: none; color: var(--ink); background: var(--bg); }
+    .pill:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* Brand strip */
+    .brand-strip { margin: 56px 0 0; padding: 22px 28px; background: var(--surface); border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; border: 0.5px solid var(--rule); }
+    .brand-strip .label { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+    .brand-strip .brands { display: flex; gap: 36px; align-items: center; flex-wrap: wrap; }
+    .brand-mark { display: inline-flex; align-items: center; }
+    .brand-mark img, .brand-mark svg { display: block; height: 22px; width: auto; }
+    /* Harbour & Pine typographic mark */
+    .brand-mark.hp { gap: 10px; }
+    .brand-mark.hp .hp-sigil { width: 30px; height: 30px; border-radius: 6px; background: var(--ink); color: var(--bg); display: inline-flex; align-items: center; justify-content: center; font-family: Georgia, serif; font-size: 13px; letter-spacing: -0.5px; }
+    .brand-mark.hp .hp-text { font-family: Georgia, serif; font-style: italic; font-size: 15px; color: var(--ink); line-height: 1; }
+    .brand-mark.hp .hp-text small { font-size: 9.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-style: normal; margin-left: 5px; vertical-align: middle; }
+
+    .photo {
+      aspect-ratio: 3 / 4;
+      background: var(--surface);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 0 0.5px var(--rule) inset;
+    }
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-caption {
+      position: absolute;
+      bottom: 12px;
+      right: 14px;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(250,246,238,0.85);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    /* nowcards */
+    .now-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+    .now { background: var(--surface); border-radius: 8px; padding: 22px; }
+    .now-label { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+    .now p { margin: 0; font-size: 14.5px; line-height: 1.5; }
+
+    section { padding: 72px 0; border-top: 0.5px solid var(--rule); }
+    .section-eyebrow { font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; color: var(--accent); margin: 0 0 24px; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 36px; }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 56px; }
+    .about-lede { font-family: Georgia, serif; font-size: 21px; color: var(--ink); line-height: 1.65; margin: 0; }
+    .about-lede em { color: var(--accent); font-style: italic; }
+    .about-side p { margin: 0 0 18px; font-size: 14.5px; color: var(--ink-soft); }
+    .about-side .lbl { font-size: 10.5px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+
+    /* Education */
+    .edu { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .edu-card { border-top: 2px solid var(--accent); padding-top: 16px; }
+    .edu-card .logo { display: block; height: 32px; width: auto; max-width: 220px; margin: 2px 0 18px; }
+    .edu-card .when { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+    .edu-card h3 { font-size: 18px; margin: 0 0 4px; }
+    .edu-card .place { font-size: 13.5px; color: var(--muted); margin: 0 0 14px; }
+    .edu-card ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-soft); }
+    .edu-card li { padding: 3px 0; }
+
+    /* Tabs */
+    .tabs { }
+    .tab-rail { display: flex; gap: 32px; border-bottom: 0.5px solid var(--rule); }
+    .tab-btn {
+      background: none; border: none;
+      padding: 14px 0;
+      font-family: inherit; font-size: 14px;
+      color: var(--muted); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -0.5px;
+      transition: 120ms ease;
+      letter-spacing: -0.1px;
+    }
+    .tab-btn:hover { color: var(--ink-soft); }
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; padding-top: 36px; }
+    .tab-panel.active { display: block; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .stat { background: var(--surface); border-radius: 8px; padding: 22px; }
+    .stat .num { font-family: Georgia, serif; font-size: 38px; color: var(--accent); line-height: 1; letter-spacing: -1px; }
+    .stat .lbl { font-size: 12.5px; color: var(--ink-soft); margin-top: 10px; line-height: 1.45; }
+
+    .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .case { background: var(--surface); border-radius: 8px; padding: 24px; }
+    .case .logo { display: block; height: 26px; width: auto; max-width: 160px; margin-bottom: 18px; }
+    .case .where { font-size: 10.5px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+    .case h3 { margin: 0 0 10px; font-size: 17px; }
+    .case p { font-size: 13.5px; color: var(--ink-soft); margin: 0; line-height: 1.6; }
+
+    .toolkit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .toolkit-group h4 { font-family: Georgia, serif; font-weight: 400; font-size: 16px; margin: 0 0 14px; color: var(--ink); }
+    .toolkit-group ul { margin: 0; padding: 0; list-style: none; }
+    .toolkit-group li { font-size: 14px; color: var(--ink-soft); padding: 5px 0; border-bottom: 0.5px solid var(--rule); }
+    .toolkit-group li:last-child { border-bottom: 0; }
+
+    /* Projects */
+    .projects-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 28px; }
+    .projects-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+    .project { background: var(--surface); border-radius: 8px; padding: 28px; }
+    .project.featured { background: var(--surface-2); }
+    .project .meta { font-size: 10.5px; letter-spacing: 1.8px; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+    .project h3 { margin: 0 0 10px; }
+    .project p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.65; }
+    .projects-row { margin-top: 16px; }
+
+    /* Photography strip (placeholder for Hidden HK) */
+    .strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 20px; }
+    .strip div { aspect-ratio: 1; background: var(--surface); border-radius: 3px; }
+    .strip div:nth-child(2) { background: var(--accent-soft); }
+    .strip div:nth-child(4) { background: #8B5A3C; }
+    .strip div:nth-child(5) { background: var(--ink-soft); }
+
+    /* Contact */
+    .contact { padding: 96px 0 72px; border-top: 0.5px solid var(--rule); text-align: center; }
+    .contact h2 { font-size: 46px; max-width: 720px; margin: 0 auto; }
+    .contact p { color: var(--ink-soft); margin: 22px auto 36px; max-width: 520px; font-size: 16px; }
+    .contact-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 14px 26px; border-radius: 100px; font-size: 14px; text-decoration: none; transition: 120ms ease; }
+    .btn-primary { background: var(--ink); color: var(--bg); border: 0.5px solid var(--ink); }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 0.5px solid var(--accent-soft); }
+    .btn-ghost:hover { background: var(--surface); }
+
+    footer { padding: 32px 0; border-top: 0.5px solid var(--rule); font-size: 13px; color: var(--muted); }
+    footer .inner { display: flex; justify-content: space-between; }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 42px; }
+      h2, .contact h2 { font-size: 28px; }
+      .container { padding: 0 22px; }
+      .hero { padding: 56px 0 40px; }
+      .hero-grid, .about-grid, .projects-grid, .edu, .stat-grid, .cases, .toolkit-grid { grid-template-columns: 1fr; gap: 28px; }
+      .now-row { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .strip { grid-template-columns: repeat(3, 1fr); }
+      .topbar .nav { display: none; }
+      section { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#" class="mark">Chloe Chan<span>.</span></a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#work">Work</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Marketing · Hong Kong SAR</p>
+          <h1>Chloe Chan.</h1>
+          <p class="tagline">Marketing postgraduate turning consumer data into brand stories that resonate with Gen&nbsp;Z.</p>
+          <div class="pills">
+            <a class="pill" href="mailto:chloe.chan.marketing@hku.com">Email</a>
+            <a class="pill" href="https://linkedin.com/in/chloe-chan-marketing-demo" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" href="#contact">Get in touch</a>
+          </div>
+        </div>
+        <div class="photo" aria-label="Portrait of Chloe Chan">
+          <!--
+            PHOTO: drop your portrait at chloe-site/photo.png
+            and replace the <img> tag below. Recommended: 1200x1600px, JPG/WebP.
+            Until then, this geometric placeholder stands in.
+          -->
+          <img src="photo.png" alt="Chloe Chan" onerror="this.style.display='none'; document.getElementById('photo-placeholder').style.display='block';">
+          <svg id="photo-placeholder" style="display:none;" viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <rect width="240" height="320" fill="#EFE6D6"/>
+            <circle cx="120" cy="120" r="52" fill="#C9A084"/>
+            <path d="M40 320 Q40 200 120 200 Q200 200 200 320 Z" fill="#C9A084"/>
+            <text x="120" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#8B5A3C" letter-spacing="2">PLACEHOLDER</text>
+          </svg>
+          <div class="photo-caption">Portrait · Hong Kong, 2026</div>
+        </div>
+      </div>
+
+      <div class="now-row">
+        <div class="now">
+          <p class="now-label">Now</p>
+          <p>MSc Marketing, HKU Business School · expected Aug 2026</p>
+        </div>
+        <div class="now">
+          <p class="now-label">Open to</p>
+          <p>Summer 2026 · brand strategy, content, consumer insights</p>
+        </div>
+        <div class="now">
+          <p class="now-label">Based in</p>
+          <p>Hong Kong SAR · Cantonese / English / Mandarin</p>
+        </div>
+      </div>
+
+      <div class="brand-strip" aria-label="Experience at">
+        <span class="label">Experience at</span>
+        <div class="brands">
+          <span class="brand-mark" title="L'Oréal"><img src="assets/loreal.svg" alt="L'Oréal"></span>
+          <span class="brand-mark" title="HSBC"><img src="assets/hsbc.svg" alt="HSBC"></span>
+          <span class="brand-mark" title="Ogilvy"><img src="assets/ogilvy.svg" alt="Ogilvy"></span>
+          <span class="brand-mark hp" title="Harbour & Pine Coffee">
+            <span class="hp-sigil">H&amp;P</span>
+            <span class="hp-text">Harbour &amp; Pine <small>Coffee</small></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <p class="section-eyebrow">About</p>
+      <div class="section-head">
+        <h2>A marketer who reads both briefs and Reddit threads.</h2>
+      </div>
+      <div class="about-grid">
+        <p class="about-lede">
+          Marketing postgraduate from <em>HKU</em> and <em>HKUST</em>. I've run integrated campaigns at L'Oréal, built acquisition dashboards at HSBC, written briefs at Ogilvy, and grown a neighbourhood coffee shop's Instagram from 2,800 to 4,600. I'm at my best where customer data meets a good story — and where the audience is one or two scrolls away from making a decision.
+        </p>
+        <div class="about-side">
+          <p class="lbl">Languages</p>
+          <p>Cantonese (native) · English (professional) · Mandarin (professional)</p>
+          <p class="lbl">Recognised by</p>
+          <p>HKU MSc Entrance Scholarship · HKUST Marketing Case Competition, 1st runner-up · Dean's List '22–24</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="container">
+      <p class="section-eyebrow">Education</p>
+      <div class="section-head">
+        <h2>Two years of business school, one of marketing MSc.</h2>
+      </div>
+      <div class="edu">
+        <div class="edu-card">
+          <img class="logo" src="assets/hku.svg" alt="The University of Hong Kong">
+          <p class="when">Sep 2025 – Aug 2026 (expected)</p>
+          <h3>HKU Business School</h3>
+          <p class="place">MSc in Marketing · Hong Kong</p>
+          <ul>
+            <li>Focus: Digital Marketing, Consumer Insights, Marketing Analytics, CRM, Brand Management</li>
+            <li>HKU MSc Entrance Scholarship</li>
+            <li>Consulting project: Gen Z segmentation for a sustainable fashion brand → creator campaign projected to cut acquisition cost by 18%</li>
+          </ul>
+        </div>
+        <div class="edu-card">
+          <img class="logo" src="assets/hkust.svg" alt="Hong Kong University of Science and Technology">
+          <p class="when">Sep 2021 – Jun 2025</p>
+          <h3>HKUST</h3>
+          <p class="place">BBA in Management · Minor in Marketing · Hong Kong</p>
+          <ul>
+            <li>CGA 3.65 / 4.30 · Dean's List 2022–23 and 2023–24</li>
+            <li>Thesis: How short-form video influences purchase intention among Gen Z in Hong Kong</li>
+            <li>Semester exchange, Copenhagen Business School, Jan–May 2024</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="container">
+      <p class="section-eyebrow">What I've done</p>
+      <div class="section-head">
+        <h2>A few receipts, organised.</h2>
+        <p style="margin:0;color:var(--muted);font-size:14px;">Switch tabs to see numbers, case studies or toolkit.</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab-rail" role="tablist">
+          <button class="tab-btn active" data-tab="numbers" role="tab">By the numbers</button>
+          <button class="tab-btn" data-tab="cases" role="tab">Case studies</button>
+          <button class="tab-btn" data-tab="toolkit" role="tab">Toolkit</button>
+        </div>
+
+        <div class="tab-panel active" data-panel="numbers" role="tabpanel">
+          <div class="stat-grid">
+            <div class="stat"><div class="num">1.2M</div><div class="lbl">social impressions on a L'Oréal product launch</div></div>
+            <div class="stat"><div class="num">+24%</div><div class="lbl">engagement vs the campaign target</div></div>
+            <div class="stat"><div class="num">−18%</div><div class="lbl">projected CAC for a Gen Z creator campaign</div></div>
+            <div class="stat"><div class="num">+11%</div><div class="lbl">email open rate from an HSBC A/B test</div></div>
+          </div>
+          <div class="stat-grid" style="margin-top:16px;">
+            <div class="stat"><div class="num">1,500+</div><div class="lbl">survey responses analysed at HSBC</div></div>
+            <div class="stat"><div class="num">170+</div><div class="lbl">UGC posts for a coffee shop campaign</div></div>
+            <div class="stat"><div class="num">6,800</div><div class="lbl">organic followers on <em>Hidden Hong Kong</em></div></div>
+            <div class="stat"><div class="num">3.65</div><div class="lbl">HKUST CGA · Dean's List two years running</div></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="cases" role="tabpanel">
+          <div class="cases">
+            <div class="case">
+              <img class="logo" src="assets/loreal.svg" alt="L'Oréal">
+              <p class="where">L'Oréal · Jun – Aug 2025</p>
+              <h3>Marketing intern, consumer products</h3>
+              <p>Coordinated integrated campaigns across Instagram, YouTube, TikTok and 80+ retail doors. Seeded 35 micro-influencers and helped ship a launch that hit 1.2M impressions and ran +24% above its engagement target.</p>
+            </div>
+            <div class="case">
+              <img class="logo" src="assets/hsbc.svg" alt="HSBC">
+              <p class="where">HSBC · Jun – Aug 2024</p>
+              <h3>Digital marketing intern, wealth & personal banking</h3>
+              <p>Built weekly acquisition dashboards, ran A/B tests on email subject lines and landing-page CTAs (winning email: +11% opens, +7% CTR), and turned 1,500+ survey responses into product pain-point themes.</p>
+            </div>
+            <div class="case">
+              <img class="logo" src="assets/ogilvy.svg" alt="Ogilvy">
+              <p class="where">Ogilvy · Jun – Aug 2023</p>
+              <h3>Account management intern</h3>
+              <p>Wrote competitor reviews, audience profiles, creative briefs and post-campaign reports. Proposed a Gen Z content format — two of three recommendations made it into the final plan.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="toolkit" role="tabpanel">
+          <div class="toolkit-grid">
+            <div class="toolkit-group">
+              <h4>Marketing & analytics</h4>
+              <ul>
+                <li>Campaign planning & CRM segmentation</li>
+                <li>GA4 · Excel · Power BI</li>
+                <li>Tableau · SPSS · SQL</li>
+              </ul>
+            </div>
+            <div class="toolkit-group">
+              <h4>Creative & research</h4>
+              <ul>
+                <li>Canva · Figma · Photoshop</li>
+                <li>Qualtrics surveying</li>
+                <li>Social listening & short-form video</li>
+              </ul>
+            </div>
+            <div class="toolkit-group">
+              <h4>Certifications</h4>
+              <ul>
+                <li>Google Analytics (2025)</li>
+                <li>Meta Certified Digital Marketing Associate (2025)</li>
+                <li>HubSpot Content Marketing (2024)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <p class="section-eyebrow">Selected projects</p>
+      <div class="section-head">
+        <h2>Things I built because I wanted to see them exist.</h2>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project featured">
+          <p class="meta">Personal · 2023 – present · featured</p>
+          <h3>Hidden Hong Kong</h3>
+          <p>A bilingual neighbourhood and street-photography account I've grown to 6,800+ organic followers — 90+ short videos and photo stories, all shot between classes and internships. A long-form love letter to the city's quieter streets.</p>
+          <div class="strip" aria-hidden="true">
+            <div></div><div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+        <div class="project">
+          <p class="meta">Team lead · 2026</p>
+          <h3>HK Sustainable Fashion Consumer Study</h3>
+          <p>Designed a bilingual survey (420 valid responses). Ran SPSS factor, cluster and regression analysis; surfaced four consumer segments and a recommended message / channel / offer matrix.</p>
+        </div>
+      </div>
+
+      <div class="projects-row">
+        <div class="project">
+          <p class="meta">Independent · 2025</p>
+          <h3>Gen Z Beauty Trends Dashboard</h3>
+          <p style="margin:0;">Cleaned publicly available social engagement data and built a Tableau dashboard comparing beauty topics, formats and engagement patterns — then turned the analysis into a sample three-month content strategy focused on high-save tutorial formats.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <p class="section-eyebrow">Get in touch</p>
+      <h2>Let's talk brand, insights, or Hong Kong.</h2>
+      <p>Open to summer 2026 internships in brand strategy, content or marketing analytics. Always happy to chat about consumer research, Gen Z, or where to find the best flat white in Sheung Wan.</p>
+      <div class="contact-cta">
+        <a class="btn btn-primary" href="mailto:chloe.chan.marketing@hku.com">Email me</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/chloe-chan-marketing-demo" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <footer>
+      <div class="inner">
+        <span>© 2026 Chloe Chan · Hong Kong SAR</span>
+        <span>Built with care · last updated August 2026</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+      });
+    });
+
+    // Photo fallback: if photo.png doesn't load, keep the SVG visible.
+    (function() {
+      var img = document.querySelector('.photo img');
+      var ph = document.getElementById('photo-placeholder');
+      if (!img || !ph) return;
+      img.addEventListener('error', function() {
+        img.style.display = 'none';
+        ph.style.display = 'block';
+      });
+    })();
+  </script>
+</body>
+</html>
