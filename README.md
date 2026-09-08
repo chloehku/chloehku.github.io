@@ -2,7 +2,7 @@
 
 Single-file static site. Warm editorial (terracotta + cream + serif), with D-style tabs for "By the numbers / Case studies / Toolkit" and a portrait in the hero.
 
-## Files
+## Files 
 
 - `index.html` — the whole site (HTML + CSS + tiny JS, no dependencies)
 - `photo.png` — your portrait (extracted from the CV at 1254×1254). Tip: a 1200×1600 vertical JPG/WebP would crop better in the 3:4 hero frame — swap when you have one.
