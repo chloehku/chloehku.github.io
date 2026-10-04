@@ -1,0 +1,430 @@
+/* ==========================================================================
+   Tetris — vanilla JS
+   Palette: warm light brown + burnt orange (matches the CV site)
+   ========================================================================== */
+
+:root {
+  --bg: #ede0c8;
+  --bg-light: #e3d3b3;
+  --bg-darker: #d6c39c;
+  --bg-darkest: #c4a875;
+  --border: #b89968;
+  --text: #2a1f12;
+  --text-muted: #6b5436;
+  --accent: #c2410c;
+  --accent-dim: rgba(194, 65, 12, 0.12);
+  --shadow: 0 8px 24px rgba(42, 31, 18, 0.15);
+  --shadow-sm: 0 2px 8px rgba(42, 31, 18, 0.12);
+
+  --cell-size: 30px;
+  --cols: 10;
+  --rows: 20;
+
+  /* Tetromino colors */
+  --p-I: #06b6d4;
+  --p-O: #eab308;
+  --p-T: #a855f7;
+  --p-S: #22c55e;
+  --p-Z: #ef4444;
+  --p-L: #f97316;
+  --p-J: #3b82f6;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ==========================================================================
+   Page layout
+   ========================================================================== */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.title {
+  font-size: clamp(36px, 7vw, 56px);
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--text);
+  line-height: 1;
+}
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Game area
+   ========================================================================== */
+.game {
+  display: grid;
+  grid-template-columns: auto 180px;
+  gap: 20px;
+  justify-content: center;
+  align-items: start;
+}
+
+/* ==========================================================================
+   Board
+   ========================================================================== */
+.board-wrap {
+  position: relative;
+  width: calc(var(--cell-size) * var(--cols));
+  height: calc(var(--cell-size) * var(--rows));
+  background: var(--bg-darker);
+  border: 3px solid var(--bg-darkest);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(var(--bg-light), var(--bg-light)) center/100% 100% no-repeat;
+}
+
+.cell {
+  border-right: 1px solid rgba(42, 31, 18, 0.08);
+  border-bottom: 1px solid rgba(42, 31, 18, 0.08);
+}
+.cell:nth-child(10n) { border-right: none; }
+.cell:nth-child(n+191) { border-bottom: none; }
+
+/* Filled cells */
+.cell.filled {
+  border: 1px solid rgba(0,0,0,0.25);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
+}
+
+/* Piece colors */
+.cell.I { background: var(--p-I); }
+.cell.O { background: var(--p-O); }
+.cell.T { background: var(--p-T); }
+.cell.S { background: var(--p-S); }
+.cell.Z { background: var(--p-Z); }
+.cell.L { background: var(--p-L); }
+.cell.J { background: var(--p-J); }
+
+/* Ghost piece */
+.cell.ghost {
+  opacity: 0.22;
+  box-shadow: none;
+}
+
+/* Piece / ghost layers */
+.layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.piece-grid {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(4, var(--cell-size));
+  grid-template-rows: repeat(4, var(--cell-size));
+  will-change: left, top;
+}
+.piece-grid .cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: none; /* piece cells don't show board grid lines */
+}
+.piece-grid .cell.filled {
+  border: 1px solid rgba(0,0,0,0.25);
+}
+
+/* ==========================================================================
+   Sidebar
+   ========================================================================== */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 180px;
+}
+
+.panel {
+  background: var(--bg-light);
+  border: 2px solid var(--bg-darkest);
+  border-radius: 6px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 18px);
+  grid-template-rows: repeat(4, 18px);
+  gap: 0;
+  align-self: center;
+  margin-top: 6px;
+}
+.next-grid .cell {
+  width: 18px;
+  height: 18px;
+}
+.next-grid .cell.filled {
+  border-radius: 2px;
+}
+
+.controls .ctrl-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+.controls .ctrl-list li {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Speed selector */
+.speed-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+.speed-btn {
+  flex: 1;
+  padding: 7px 6px;
+  border: 1px solid var(--bg-darkest);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.speed-btn:hover { border-color: var(--accent); color: var(--text); }
+.speed-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--bg-darkest);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 2px 6px;
+  min-width: 18px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Overlay (start / pause / game over)
+   ========================================================================== */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(237, 224, 200, 0.92);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  z-index: 10;
+}
+.overlay.visible { display: flex; }
+.overlay-inner {
+  text-align: center;
+  padding: 24px 32px;
+}
+.overlay-inner h2 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.overlay-inner p {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+}
+.overlay-inner p kbd { margin: 0 2px; }
+
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.btn:hover { background: var(--accent); color: var(--bg); }
+.btn.primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+.btn.primary:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   Touch controls (mobile)
+   ========================================================================== */
+.touch-controls {
+  display: none;
+  margin-top: 20px;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tbtn {
+  width: 64px;
+  height: 56px;
+  background: var(--bg-light);
+  border: 2px solid var(--bg-darkest);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+.tbtn:active { transform: translateY(2px); background: var(--accent); color: var(--bg); }
+.tbtn.wide { width: 140px; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 720px) {
+  :root { --cell-size: 24px; }
+  .sidebar { width: 130px; }
+  .stat-value { font-size: 18px; }
+  .next-grid { grid-template-columns: repeat(4, 14px); grid-template-rows: repeat(4, 14px); }
+  .next-grid .cell { width: 14px; height: 14px; }
+  .controls .ctrl-list li { font-size: 10px; }
+  .piece-grid { grid-template-columns: repeat(4, var(--cell-size)); grid-template-rows: repeat(4, var(--cell-size)); }
+  .piece-grid .cell { width: var(--cell-size); height: var(--cell-size); }
+}
+
+@media (max-width: 560px) {
+  :root { --cell-size: 22px; }
+  .game { grid-template-columns: auto; gap: 16px; }
+  .sidebar { flex-direction: row; width: auto; max-width: calc(var(--cell-size) * var(--cols)); }
+  .sidebar .panel { flex: 1; }
+  .next-grid { grid-template-columns: repeat(4, 14px); grid-template-rows: repeat(4, 14px); }
+  .touch-controls { display: flex; }
+  .header { margin-bottom: 18px; }
+}
+
+@media (max-width: 360px) {
+  :root { --cell-size: 18px; }
+  .next-grid { grid-template-columns: repeat(4, 12px); grid-template-rows: repeat(4, 12px); }
+  .next-grid .cell { width: 12px; height: 12px; }
+}
+
+/* Subtle line clear animation */
+@keyframes lineClear {
+  0%   { transform: scaleY(1); opacity: 1; filter: brightness(1); }
+  50%  { transform: scaleY(0.4); opacity: 0.6; filter: brightness(1.6); }
+  100% { transform: scaleY(0); opacity: 0; filter: brightness(1); }
+}
+.cell.clearing {
+  animation: lineClear 0.28s ease-out forwards;
+  transform-origin: center;
+}
